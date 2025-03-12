@@ -1,0 +1,51 @@
+# Gastronomica Project Context
+
+## Project Overview
+Gastronomica is a food diary and culinary social platform that allows users to:
+- Create a personal food scrapbook of memorable dishes
+- Get AI-powered food recommendations
+- Capture dishes with photos and notes
+- Share dining experiences with friends
+
+## Tech Stack
+- Svelte/SvelteKit for frontend
+- TailwindCSS for styling
+- DaisyUI for component library
+- Lucide for icons
+
+## Theme Colors
+- Primary: #e9c46a (gold/yellow) - rgba(233, 196, 106, X)
+- Secondary: #ca2e55 (pink/red) - rgba(202, 46, 85, X)
+- Accent: #136f63 (teal) - rgba(19, 111, 99, X)
+
+## Dark/Light Mode
+- The app supports both dark and light modes
+- Dark mode uses 'gastronomica_dark' theme
+- Light mode uses 'gastronomica_light' theme
+- Theme is stored in localStorage as 'theme' with values 'dark' or 'light'
+
+## Key Components
+- NavBar: Navigation with theme toggle and logo
+- Hero: Main landing section with CTA
+- Features: Showcases key app features with hover glow effects
+- Mockups: Shows app screenshots/mockups
+- CallToAction: Email signup form for beta access
+- Footer: Site footer with logo and links
+
+## Visual Design Elements
+- Colored shadows/glows for visual interest
+- Smooth transitions and animations
+- Responsive design for mobile and desktop
+- Contained shadows in card components
+- Hover effects on interactive elements
+
+## Component Structure
+- Components are stored in src/lib/components/
+- Pages are in src/routes/
+- Styling is managed through Tailwind classes
+- Logo is a reusable component
+
+## Special Features
+- Feature cards have hover glow effects that change based on theme
+- Dark mode: Accent color glow (#136f63)
+- Light mode: Primary color glow (#e9c46a) 

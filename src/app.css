@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+	name: 'gastronomica_dark';
+	default: true;
+	prefersdark: true;
+	color-scheme: 'dark';
+	--color-base-100: #191919;
+	--color-base-200: #141414;
+	--color-base-300: #0a0a0a;
+	--color-base-content: oklch(98% 0.003 247.858);
+	--color-primary: #e9c46a;
+	--color-primary-content: oklch(12% 0.042 264.695);
+	--color-secondary: #ca2e55;
+	--color-secondary-content: oklch(98% 0.003 247.858);
+	--color-accent: #136f63;
+	--color-accent-content: oklch(98% 0.003 247.858);
+	--color-neutral: oklch(20% 0.042 265.755);
+	--color-neutral-content: oklch(80% 0.0081 61.42);
+	--color-info: oklch(80.39% 0.1148 241.68);
+	--color-info-content: oklch(30.39% 0.1148 241.68);
+	--color-success: oklch(83.92% 0.0901 136.87);
+	--color-success-content: oklch(23.92% 0.0901 136.87);
+	--color-warning: oklch(83.92% 0.1085 80);
+	--color-warning-content: oklch(43.92% 0.1085 80);
+	--color-error: oklch(75.1% 0.1814 22.37);
+	--color-error-content: oklch(35.1% 0.1814 22.37);
+	--radius-selector: 1rem;
+	--radius-field: 0.5rem;
+	--radius-box: 2rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.28125rem;
+	--border: 2px;
+	--depth: 1;
+	--noise: 1;
+}
+
+@plugin "daisyui/theme" {
+	name: 'gastronomica_dark';
+	default: false;
+	prefersdark: false;
+	color-scheme: 'light';
+	--color-base-100: oklch(92% 0.013 255.508);
+	--color-base-200: oklch(86% 0.022 252.894);
+	--color-base-300: oklch(70% 0.04 256.788);
+	--color-base-content: oklch(12% 0.042 264.695);
+	--color-primary: #e9c46a;
+	--color-primary-content: oklch(12% 0.042 264.695);
+	--color-secondary: #ca2e55;
+	--color-secondary-content: oklch(94% 0.028 342.258);
+	--color-accent: #136f63;
+	--color-accent-content: oklch(98% 0.003 247.858);
+	--color-neutral: oklch(20% 0.042 265.755);
+	--color-neutral-content: oklch(80% 0.0081 61.42);
+	--color-info: oklch(74% 0.16 232.661);
+	--color-info-content: oklch(29% 0.066 243.157);
+	--color-success: oklch(76% 0.177 163.223);
+	--color-success-content: oklch(37% 0.077 168.94);
+	--color-warning: oklch(82% 0.189 84.429);
+	--color-warning-content: oklch(41% 0.112 45.904);
+	--color-error: oklch(71% 0.194 13.428);
+	--color-error-content: oklch(27% 0.105 12.094);
+	--radius-selector: 1rem;
+	--radius-field: 0.5rem;
+	--radius-box: 1rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.28125rem;
+	--border: 2px;
+	--depth: 1;
+	--noise: 1;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add smooth scrolling behavior */
+html {
+	scroll-behavior: smooth;
+}
+
+/* You can add any additional custom styles below */
