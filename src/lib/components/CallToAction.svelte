@@ -155,7 +155,7 @@
           }`}
         >
           <div class="flex flex-col gap-4">
-            <div class="flex-grow relative">
+            <div class="flex-grow relative pb-5">
               <div class="relative">
                 <input
                   id="email"
@@ -165,7 +165,7 @@
                   bind:this={inputElement}
                   on:input={handleInput}
                   required
-                  class={`w-full py-2 md:py-3 px-3 md:px-4 pl-4 md:pl-5 rounded-full bg-base-content/10 backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
+                  class={`w-full py-2 md:py-3 px-3 md:px-4 pl-4 md:pl-5 rounded-xl bg-base-content/10 backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
                   ${errorMessage ? 'border-error shadow-[0_0_0_1px_rgba(202,46,85,0.3)]' : 
                     isValidated ? 'border-success shadow-[0_0_0_1px_rgba(19,111,99,0.3)]' : 
                     'border-base-content/20'} 
