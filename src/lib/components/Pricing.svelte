@@ -147,7 +147,7 @@
     <div class="text-center mb-8">
       <h2 class="text-4xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
       <p class="text-base-content/80 text-lg max-w-3xl mx-auto mb-6">
-        Gastronomica is built for food lovers, not investors. We're committed to creating an app that serves you, 
+        Palette is built for food lovers, not investors. We're committed to creating an app that serves you, 
         not shareholders, which means our decisions are guided by your needs, not funding rounds.
       </p>
       <div class="flex flex-col items-center">

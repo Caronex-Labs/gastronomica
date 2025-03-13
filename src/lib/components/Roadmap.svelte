@@ -91,7 +91,7 @@
     <div class="text-center mb-10 md:mb-16">
       <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">Our Development Roadmap</h2>
       <p class="text-base-content/80 text-base md:text-lg max-w-2xl mx-auto">
-        Follow our journey as we build Gastronomica in phases. Each version brings new features that enhance your culinary experience, from personal food journaling to becoming a food influencer.
+        Follow our journey as we build Palette in phases. Each version brings new features that enhance your culinary experience, from personal food journaling to becoming a food influencer.
       </p>
     </div>
     
