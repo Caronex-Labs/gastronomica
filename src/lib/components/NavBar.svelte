@@ -109,9 +109,6 @@
 		</div>
 	</header>
 
-	<!-- Spacer to push content below the fixed navbar -->
-	<div class="h-24"></div>
-
 	<!-- Page content goes here -->
 	<slot />
 </div>
