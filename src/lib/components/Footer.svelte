@@ -13,7 +13,7 @@
     </div>
     
     <div class="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-base-content/10 text-xs md:text-sm text-base-content/60 text-center">
-      <p class="mb-2">© {currentYear} Gastronomica. All rights reserved.</p>
+      <p class="mb-2">© {currentYear} Palete. All rights reserved.</p>
       <p>With ❤️ From <a href="https://www.adroitalliance.in" class="hover:text-accent transition-colors">Adroit Alliance</a> and <a href="https://www.caronexlabs.com" class="hover:text-accent transition-colors">CaronexLabs</a></p>
     </div>
   </div>

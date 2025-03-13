@@ -2,7 +2,7 @@
 @plugin "daisyui";
 
 @plugin "daisyui/theme" {
-	name: 'gastronomica_dark';
+	name: 'palete_dark';
 	default: true;
 	prefersdark: true;
 	color-scheme: 'dark';
@@ -37,7 +37,7 @@
 }
 
 @plugin "daisyui/theme" {
-	name: 'gastronomica_dark';
+	name: 'palete_light';
 	default: false;
 	prefersdark: false;
 	color-scheme: 'light';

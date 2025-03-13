@@ -9,7 +9,7 @@
 		const savedTheme = localStorage.getItem('theme');
 		// Default to dark mode if no saved preference
 		const theme = savedTheme || 'dark';
-		document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'gastronomica_dark' : 'gastronomica_light');
+		document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'palete_dark' : 'palete_light');
 	}
 </script>
 

@@ -81,7 +81,7 @@
       }`}
     >
       <p class="text-base md:text-lg text-base-content/90">
-        Gastronomica helps you effortlessly record your favorite dishes, 
+        Palete helps you effortlessly record your favorite dishes, 
         browse new and old discoveries, and tap into a personal AI assistant 
         to decide what to eat next—whether it's an old favorite or something new.
       </p>

@@ -12,9 +12,9 @@
   }
 </script>
 
-<div class="flex items-baseline">
+<div class="flex items-center">
   <span class="{textSize} font-bold bg-clip-text text-transparent bg-gradient-to-r from-accent via-secondary to-primary">
-    Gastronomica
+    Palete
   </span>
   {#if showBadge}
     <span class="ml-2 text-xs py-0.5 px-2 rounded-full bg-secondary text-secondary-content font-semibold">

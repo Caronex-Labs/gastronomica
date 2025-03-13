@@ -1,7 +1,7 @@
-# Gastronomica Project Context
+# Palette Project Context
 
 ## Project Overview
-Gastronomica is a food diary and culinary social platform that allows users to:
+Palette is a food diary and culinary social platform that allows users to:
 - Create a personal food scrapbook of memorable dishes
 - Get AI-powered food recommendations
 - Capture dishes with photos and notes
@@ -20,8 +20,8 @@ Gastronomica is a food diary and culinary social platform that allows users to:
 
 ## Dark/Light Mode
 - The app supports both dark and light modes
-- Dark mode uses 'gastronomica_dark' theme
-- Light mode uses 'gastronomica_light' theme
+- Dark mode uses 'Palette_dark' theme
+- Light mode uses 'Palette_light' theme
 - Theme is stored in localStorage as 'theme' with values 'dark' or 'light'
 
 ## Key Components

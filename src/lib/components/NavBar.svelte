@@ -36,7 +36,7 @@
 	
 	function applyTheme() {
 		// Apply theme to HTML element
-		document.documentElement.setAttribute('data-theme', isDarkMode ? 'gastronomica_dark' : 'gastronomica_light');
+		document.documentElement.setAttribute('data-theme', isDarkMode ? 'palete_dark' : 'palete_light');
 	}
 </script>
 
