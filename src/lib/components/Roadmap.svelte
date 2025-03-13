@@ -18,7 +18,7 @@
     {
       version: "1",
       title: "Foodie Foundations",
-      date: "Q1 2025",
+      date: "Q2 2025",
       features: [
         "Personal food diary with unlimited entries",
         "AI-powered food recognition",
@@ -32,7 +32,7 @@
     {
       version: "2",
       title: "Gourmet Social",
-      date: "Q2 2025",
+      date: "Q3 2025",
       features: [
         "Individual taste profiles",
         "Broader social suggestions beyond friends",
@@ -46,7 +46,7 @@
     {
       version: "3",
       title: "Connoisseur Creator",
-      date: "Q3 2025",
+      date: "Q4 2025",
       features: [
         "Post on the Social Influencer Feed",
         "Priority AI processing",
