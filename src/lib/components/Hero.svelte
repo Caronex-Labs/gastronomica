@@ -28,7 +28,7 @@
           isVisible ? 'opacity-100' : 'opacity-0 transform translate-y-4'
         }`}
       >
-        Your AI-Powered Food Journey
+        Your AI-Powered Food Diary
       </div>
       
       <!-- Main Headline -->
