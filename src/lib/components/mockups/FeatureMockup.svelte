@@ -4,7 +4,7 @@
   export let featureType: string = "default";
 </script>
 
-<div class="mockup-phone">
+<div class="mockup-phone" style="overflow: visible;">
   <div class="mockup-phone-camera"></div> 
   <div class="mockup-phone-display">
     <div class="artboard artboard-demo phone-1 flex items-center justify-center bg-base-100">

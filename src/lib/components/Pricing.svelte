@@ -81,7 +81,7 @@
         { name: "Unlimited entries into the diary", included: true },
         { name: "2 pictures per dish", included: true },
         { name: "All AI food recognition features", included: true },
-        { name: "AI processing based on availability", included: true },
+        { name: "Slower AI responses", included: true },
         { name: "Social sharing with friends only", included: true },
         { name: "Maximum of 50 friends", included: true },
         { name: "Individual taste profile", included: false },
@@ -103,7 +103,6 @@
         { name: "All Foodie features", included: true },
         { name: "5 pictures per dish", included: true },
         { name: "Individual taste profile", included: true },
-        { name: "AI processing based on availability", included: true },
         { name: "Broader social suggestions beyond friends", included: true },
         { name: "Maximum of 100 friends", included: true },
         { name: "Follow Connoisseur-level users (Food Influencers)", included: true },
@@ -126,7 +125,7 @@
         { name: "All Gourmet features", included: true },
         { name: "10 pictures per dish", included: true },
         { name: "Post on the Social Influencer Feed", included: true },
-        { name: "Priority AI processing", included: true },
+        { name: "Faster AI responses", included: true },
         { name: "Advanced dashboard to analyze follower data", included: true },
         { name: "Early access to new features", included: true }
       ]

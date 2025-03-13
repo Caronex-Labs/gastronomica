@@ -12,7 +12,7 @@
   });
 </script>
 
-<section id="hero" class="relative pt-24 md:pt-28 lg:pt-36 pb-16 md:pb-20 lg:pb-32 px-4 md:px-6 overflow-hidden">
+<section id="hero" class="relative pt-20 md:pt-24 lg:pt-32 pb-16 md:pb-20 lg:pb-32 px-4 md:px-6 overflow-hidden">
   <!-- Enhanced Background Design Elements -->
   <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[20rem] md:w-[30rem] lg:w-[40rem] h-[20rem] md:h-[30rem] lg:h-[40rem] rounded-full bg-primary/30 blur-[100px] opacity-70"></div>
   <div class="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[20rem] md:w-[30rem] lg:w-[40rem] h-[20rem] md:h-[30rem] lg:h-[40rem] rounded-full bg-accent/30 blur-[100px] opacity-70"></div>
