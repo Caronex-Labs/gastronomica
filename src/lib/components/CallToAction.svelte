@@ -263,7 +263,7 @@
           </div>
           <h3 class="text-lg md:text-xl font-semibold mb-2">Thank You for Joining!</h3>
           <p class="text-sm md:text-base text-base-content/80">
-            We've added you to our waitlist. You'll be among the first to know when Palette launches.
+            We've added you to our waitlist. You'll be among the first to know when Palete launches.
           </p>
         </div>
         
