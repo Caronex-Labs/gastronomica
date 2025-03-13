@@ -82,29 +82,29 @@
   });
 </script>
 
-<section id="features" class="py-20 px-6 bg-primary/5">
+<section id="features" class="py-16 md:py-20 px-4 md:px-6 bg-primary/5">
   <div class="max-w-7xl mx-auto">
     <!-- Section Header -->
-    <div class="text-center mb-16">
+    <div class="text-center mb-10 md:mb-16">
       <h2 
-        class={`text-3xl md:text-4xl font-bold mb-4 transition-all duration-700 ${
+        class={`text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 transition-all duration-700 ${
           isVisible ? 'opacity-100' : 'opacity-0 transform translate-y-4'
         }`}
       >
         Key Features
       </h2>
       <div 
-        class={`w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-secondary to-accent mb-6 transition-all duration-700 delay-100 ${
+        class={`w-16 md:w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-secondary to-accent mb-4 md:mb-6 transition-all duration-700 delay-100 ${
           isVisible ? 'opacity-100 transform scale-x-100' : 'opacity-0 transform scale-x-0'
         }`}
       ></div>
     </div>
     
     <!-- Feature Cards -->
-    <div class="flex flex-col gap-20 md:gap-24">
+    <div class="flex flex-col gap-12 sm:gap-16 md:gap-20 lg:gap-24">
       {#each features as feature, i}
         <div 
-          class={`feature-card rounded-3xl overflow-hidden shadow-md transition-all duration-700 ${
+          class={`feature-card rounded-2xl md:rounded-3xl overflow-hidden shadow-md transition-all duration-700 ${
             isDarkMode 
               ? 'bg-base-100 border border-base-content/10' 
               : 'bg-base-100 border border-accent/10'
@@ -114,20 +114,20 @@
               : 'opacity-0 transform translate-y-8'
           }`}
         >
-          <!-- Card Layout - alternating left/right on desktop -->
-          <div class="flex flex-col md:flex-row md:h-96 lg:h-[28rem] {i % 2 === 1 ? 'md:flex-row-reverse' : ''}">
+          <!-- Card Layout - alternating left/right on desktop, stacked on mobile -->
+          <div class="flex flex-col md:flex-row md:h-80 lg:h-96 xl:h-[28rem] {i % 2 === 1 ? 'md:flex-row-reverse' : ''}">
             
             <!-- Text Content -->
-            <div class="p-8 md:p-10 lg:p-12 flex-1 flex flex-col justify-center">
-              <div class="w-16 h-16 lg:w-20 lg:h-20 mb-6 rounded-2xl flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 text-primary">
-                <svelte:component this={feature.icon} class="w-8 h-8 lg:w-10 lg:h-10" />
+            <div class="p-6 sm:p-8 md:p-10 lg:p-12 flex-1 flex flex-col justify-center">
+              <div class="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 mb-4 md:mb-6 rounded-xl md:rounded-2xl flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 text-primary">
+                <svelte:component this={feature.icon} class="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10" />
               </div>
-              <h3 class="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4">{feature.title}</h3>
-              <p class="text-base md:text-lg text-base-content/70 max-w-xl">{feature.description}</p>
+              <h3 class="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold mb-2 md:mb-4">{feature.title}</h3>
+              <p class="text-sm md:text-base lg:text-lg text-base-content/70 max-w-xl">{feature.description}</p>
             </div>
             
             <!-- Mockup Display -->
-            <div class="w-full md:w-1/2 h-72 md:h-auto bg-base-200/30 overflow-hidden">
+            <div class="w-full md:w-1/2 h-[32rem] sm:h-[36rem] md:h-auto bg-base-100 overflow-hidden">
               <div class="mockup-container flex justify-center mt-5">
                 <svelte:component this={feature.mockup} />
               </div>
@@ -173,16 +173,28 @@
   /* Responsive scaling for mockups */
   .mockup-container {
     transform-origin: top center;
-    transform: scale(0.65);
+    transform: scale(0.7);
+  }
+  
+  @media (min-width: 640px) {
+    .mockup-container {
+      transform: scale(0.8);
+    }
   }
   
   @media (min-width: 768px) {
+    .mockup-container {
+      transform: scale(0.55);
+    }
+  }
+  
+  @media (min-width: 1024px) {
     .mockup-container {
       transform: scale(0.6);
     }
   }
   
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .mockup-container {
       transform: scale(0.65);
     }

@@ -1,11 +1,73 @@
 <script lang="ts">
   import { Check, X, Utensils, Camera, Sparkles, Users, Globe, Star, Clock, ChefHat, MapPin, Heart, Bookmark, AlertTriangle, Flame } from 'lucide-svelte';
+  import type { ComponentType } from 'svelte';
   
   // Toggle between monthly and yearly pricing
   let isYearly = false;
   
+  // Define color types
+  type ColorTheme = 'primary' | 'secondary' | 'accent';
+  type ColorProperty = 'bg' | 'bgHover' | 'border' | 'borderHover' | 'text' | 'buttonBg' | 'buttonText' | 'buttonHover';
+  
+  // Define plan type
+  type PlanFeature = {
+    name: string;
+    included: boolean;
+  };
+  
+  type Plan = {
+    name: string;
+    version: string;
+    description: string;
+    userType: string;
+    monthlyPrice: number;
+    yearlyPrice: number;
+    color: ColorTheme;
+    icon: ComponentType;
+    features: PlanFeature[];
+  };
+  
+  // Define color mapping for different themes
+  const colorMap = {
+    primary: {
+      bg: 'rgba(233, 196, 106, 0.1)',
+      bgHover: 'rgba(233, 196, 106, 0.2)',
+      border: 'rgba(233, 196, 106, 0.3)',
+      borderHover: 'rgba(233, 196, 106, 1)',
+      text: 'rgb(233, 196, 106)',
+      buttonBg: 'rgb(233, 196, 106)',
+      buttonText: '#000000',
+      buttonHover: 'rgba(233, 196, 106, 0.8)'
+    },
+    secondary: {
+      bg: 'rgba(202, 46, 85, 0.1)',
+      bgHover: 'rgba(202, 46, 85, 0.2)',
+      border: 'rgba(202, 46, 85, 0.3)',
+      borderHover: 'rgba(202, 46, 85, 1)',
+      text: 'rgb(202, 46, 85)',
+      buttonBg: 'rgb(202, 46, 85)',
+      buttonText: '#ffffff',
+      buttonHover: 'rgba(202, 46, 85, 0.8)'
+    },
+    accent: {
+      bg: 'rgba(19, 111, 99, 0.1)',
+      bgHover: 'rgba(19, 111, 99, 0.2)',
+      border: 'rgba(19, 111, 99, 0.3)',
+      borderHover: 'rgba(19, 111, 99, 1)',
+      text: 'rgb(19, 111, 99)',
+      buttonBg: 'rgb(19, 111, 99)',
+      buttonText: '#ffffff',
+      buttonHover: 'rgba(19, 111, 99, 0.8)'
+    }
+  };
+  
+  // Helper function to get color safely
+  function getColor(plan: { color: ColorTheme }, property: ColorProperty): string {
+    return colorMap[plan.color]?.[property] || '';
+  }
+  
   // Define pricing plans with correct feature distribution
-  const plans = [
+  const plans: Plan[] = [
     {
       name: "Foodie",
       version: "v1",
@@ -100,16 +162,16 @@
     </div>
     
     <!-- Monthly/Yearly toggle -->
-    <div class="flex justify-center mb-12">
-      <div class="bg-base-300 rounded-full p-1 flex items-center">
+    <div class="flex justify-center mb-8 md:mb-12">
+      <div class="bg-base-300 rounded-full p-1 flex items-center flex-wrap justify-center">
         <button 
-          class={`px-6 py-2 rounded-full transition-all ${!isYearly ? 'bg-primary text-primary-content shadow-md' : 'text-base-content/70'}`}
+          class={`px-4 md:px-6 py-2 rounded-full transition-all ${!isYearly ? 'bg-primary text-primary-content shadow-md' : 'text-base-content/70'}`}
           on:click={() => isYearly = false}
         >
           Monthly
         </button>
         <button 
-          class={`px-6 py-2 rounded-full transition-all ${isYearly ? 'bg-primary text-primary-content shadow-md' : 'text-base-content/70'}`}
+          class={`px-4 md:px-6 py-2 rounded-full transition-all ${isYearly ? 'bg-primary text-primary-content shadow-md' : 'text-base-content/70'}`}
           on:click={() => isYearly = true}
         >
           Yearly <span class="text-xs opacity-80">Save 15%</span>
@@ -118,38 +180,59 @@
     </div>
     
     <!-- Pricing cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
       {#each plans as plan, i}
         <div class="relative">
-          <div class={`card bg-base-100 shadow-xl border-2 border-${plan.color}/30 h-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:border-${plan.color}`}>
+          <div 
+            class="card bg-base-100 shadow-xl h-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
+            style="border: 2px solid {getColor(plan, 'border')};"
+          >
             <!-- Card header with decorative elements -->
-            <div class={`bg-${plan.color}/10 p-6 relative overflow-hidden`}>
-              <div class={`absolute -top-12 -right-12 w-24 h-24 rounded-full bg-${plan.color}/20 blur-xl`}></div>
+            <div 
+              class="p-4 md:p-6 relative overflow-hidden"
+              style="background-color: {getColor(plan, 'bg')};"
+            >
+              <div 
+                class="absolute -top-12 -right-12 w-24 h-24 rounded-full blur-xl"
+                style="background-color: {getColor(plan, 'bgHover')};"
+              ></div>
               
               <div class="relative z-10">
-                <div class="flex items-center gap-3 mb-3">
-                  <div class={`w-10 h-10 rounded-full bg-${plan.color} flex items-center justify-center text-${plan.color}-content`}>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
+                  <div 
+                    class="w-10 h-10 rounded-full flex items-center justify-center"
+                    style="background-color: {getColor(plan, 'text')}; color: {getColor(plan, 'buttonText')};"
+                  >
                     <svelte:component this={plan.icon} size={20} />
                   </div>
                   <div>
-                    <div class="flex items-center gap-2">
-                      <h3 class={`text-2xl font-bold text-${plan.color}`}>{plan.name}</h3>
-                      <div class={`badge badge-${plan.color} text-${plan.color}-content text-xs`}>Available in {plan.version}</div>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3 
+                        class="text-xl md:text-2xl font-bold"
+                        style="color: {getColor(plan, 'text')};"
+                      >{plan.name}</h3>
+                      <div 
+                        class="badge text-xs"
+                        style="background-color: {getColor(plan, 'text')}; color: {getColor(plan, 'buttonText')};"
+                      >Available in {plan.version}</div>
                     </div>
                     <p class="text-sm text-base-content/60">{plan.userType}</p>
                   </div>
                 </div>
-                <p class="text-base-content/70 mb-4">{plan.description}</p>
+                <p class="text-base-content/70 mb-4 text-sm md:text-base">{plan.description}</p>
                 
                 <div class="flex items-end gap-1">
-                  <span class={`text-4xl font-bold text-${plan.color}`}>
+                  <span 
+                    class="text-3xl md:text-4xl font-bold"
+                    style="color: {getColor(plan, 'text')};"
+                  >
                     {formatPrice(isYearly ? plan.yearlyPrice / 12 : plan.monthlyPrice)}
                   </span>
                   <span class="text-base-content/70 mb-1">/ month</span>
                 </div>
                 
                 {#if isYearly}
-                  <div class="text-sm text-base-content/70 mt-1">
+                  <div class="text-xs md:text-sm text-base-content/70 mt-1">
                     Billed annually as {formatPrice(plan.yearlyPrice)}
                   </div>
                 {/if}
@@ -157,12 +240,16 @@
             </div>
             
             <!-- Feature list -->
-            <div class="card-body p-6">
-              <ul class="space-y-3 mb-6">
+            <div class="card-body p-4 md:p-6">
+              <ul class="space-y-2 md:space-y-3 mb-6 text-sm md:text-base">
                 {#each plan.features as feature}
                   <li class="flex items-start gap-2">
                     {#if feature.included}
-                      <Check size={18} class={`text-${plan.color} mt-0.5 flex-shrink-0`} />
+                      <Check 
+                        size={18} 
+                        class="mt-0.5 flex-shrink-0"
+                        style="color: {getColor(plan, 'text')};"
+                      />
                       <span>{feature.name}</span>
                     {:else}
                       <X size={18} class="text-base-content/30 mt-0.5 flex-shrink-0" />
@@ -173,7 +260,11 @@
               </ul>
               
               <div class="card-actions justify-center mt-auto">
-                <a href="#cta" class={`btn btn-${plan.color} w-full hover:bg-${plan.color}/80`}>
+                <a 
+                  href="#cta" 
+                  class="btn w-full border-none hover:opacity-90"
+                  style="background-color: {getColor(plan, 'buttonBg')}; color: {getColor(plan, 'buttonText')};"
+                >
                   Choose {plan.name}
                 </a>
               </div>
@@ -184,16 +275,16 @@
     </div>
     
     <!-- Additional info -->
-    <div class="mt-16 text-center">
-      <p class="text-base-content/70 max-w-2xl mx-auto mb-4">
+    <div class="mt-12 md:mt-16 text-center">
+      <p class="text-base-content/70 max-w-2xl mx-auto mb-4 text-sm md:text-base">
         All plans include a 14-day free trial. No credit card required to start. 
         Cancel anytime.
       </p>
-      <div class="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 p-6 rounded-xl max-w-2xl mx-auto border border-base-300 shadow-lg">
-        <div class="flex items-center justify-center gap-2 mb-3">
-          <h3 class="font-bold text-lg">Experimental Pricing</h3>
+      <div class="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 p-4 md:p-6 rounded-xl max-w-2xl mx-auto border border-base-300 shadow-lg">
+        <div class="flex items-center justify-center gap-2 mb-2 md:mb-3">
+          <h3 class="font-bold text-base md:text-lg">Experimental Pricing</h3>
         </div>
-        <p class="text-base-content/90">
+        <p class="text-base-content/90 text-sm md:text-base">
           These pricing plans are experimental and subject to change based on user feedback.
           We're committed to finding the right balance that provides value to all types of food enthusiasts.
         </p>

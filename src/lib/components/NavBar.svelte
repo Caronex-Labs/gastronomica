@@ -3,7 +3,6 @@
 	import Logo from './Logo.svelte';
 	
 	let isScrolled = false;
-	let mobileMenuOpen = false;
 	let isDarkMode = true; // Default to dark mode
 	
 	onMount(() => {
@@ -27,10 +26,6 @@
 		return () => window.removeEventListener('scroll', handleScroll);
 	});
 	
-	function toggleMobileMenu() {
-		mobileMenuOpen = !mobileMenuOpen;
-	}
-	
 	function toggleTheme() {
 		isDarkMode = !isDarkMode;
 		applyTheme();
@@ -47,7 +42,7 @@
 
 <div class="navbar-container w-full">
 	<header 
-		class={`fixed top-0 left-0 right-0 w-full z-50 py-4 px-6 transition-all duration-300 ${
+		class={`fixed top-0 left-0 right-0 w-full z-50 py-4 px-4 md:px-6 transition-all duration-300 ${
 			isScrolled 
 				? 'bg-base-100/90 backdrop-blur-md shadow-sm' 
 				: 'bg-transparent'
@@ -89,7 +84,7 @@
 				</a>
 			</nav>
 
-			<!-- Mobile Menu Button -->
+			<!-- Mobile Actions -->
 			<div class="md:hidden flex items-center gap-2">
 				<!-- Theme Toggle for Mobile -->
 				<button 
@@ -106,51 +101,12 @@
 					{/if}
 				</button>
 				
-				<button
-					on:click={toggleMobileMenu}
-					class="text-base-content p-2"
-					aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-				>
-					{#if mobileMenuOpen}
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-					{:else}
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-					{/if}
-				</button>
+				<!-- Join Waitlist Button for Mobile -->
+				<a href="#cta" class="btn btn-primary btn-sm rounded-full px-3 text-primary-content font-semibold">
+					Join Waitlist
+				</a>
 			</div>
 		</div>
-
-		<!-- Mobile Menu -->
-		{#if mobileMenuOpen}
-			<div class="md:hidden absolute top-full left-0 right-0 w-full bg-base-100 shadow-lg p-4 animate-in fade-in">
-				<nav class="flex flex-col space-y-4 py-2">
-					<a 
-						href="#features" 
-						on:click={toggleMobileMenu}
-						class="text-base-content hover:text-accent py-2 transition-colors"
-					>
-						Features
-					</a>
-					<a 
-						href="#roadmap" 
-						on:click={toggleMobileMenu}
-						class="text-base-content hover:text-accent py-2 transition-colors"
-					>
-						Roadmap
-					</a>
-					<a 
-						href="#cta" 
-						on:click={toggleMobileMenu}
-						class="text-base-content hover:text-accent py-2 transition-colors"
-					>
-						Join Waitlist
-					</a>
-					<a href="#cta" class="btn btn-primary w-full rounded-full mt-2 text-primary-content font-semibold">
-						Sign Up
-					</a>
-				</nav>
-			</div>
-		{/if}
 	</header>
 
 	<!-- Spacer to push content below the fixed navbar -->
