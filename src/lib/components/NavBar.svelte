@@ -12,14 +12,14 @@
 		
 		window.addEventListener('scroll', handleScroll);
 		
-		// Check for saved theme preference or use system preference
+		// Check for saved theme preference or default to dark mode
 		const savedTheme = localStorage.getItem('theme');
 		if (savedTheme) {
 			isDarkMode = savedTheme === 'dark';
 			applyTheme();
 		} else {
-			// Use system preference
-			isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			// Default to dark mode if no saved preference
+			isDarkMode = true;
 			applyTheme();
 		}
 		

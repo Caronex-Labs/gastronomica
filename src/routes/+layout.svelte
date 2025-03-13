@@ -4,10 +4,11 @@
 
 	let { children } = $props();
 	
-	// Initialize theme based on saved preference or system preference
+	// Initialize theme based on saved preference or default to dark mode
 	if (typeof window !== 'undefined') {
 		const savedTheme = localStorage.getItem('theme');
-		const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+		// Default to dark mode if no saved preference
+		const theme = savedTheme || 'dark';
 		document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'gastronomica_dark' : 'gastronomica_light');
 	}
 </script>

@@ -3,6 +3,7 @@
   import { fade, fly } from 'svelte/transition';
   
   let email = '';
+  let feedback = '';
   let isSubmitted = false;
   let isVisible = false;
   let isLoading = false;
@@ -83,7 +84,10 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: email.trim() })
+        body: JSON.stringify({ 
+          email: email.trim(),
+          feedback: feedback.trim()
+        })
       });
       
       const result = await response.json();
@@ -91,6 +95,7 @@
       if (result.success) {
         isSubmitted = true;
         email = '';
+        feedback = '';
         isValidated = false;
         
         // Reset after 5 seconds
@@ -149,10 +154,11 @@
             isSubmitted ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'
           }`}
         >
-          <div class="flex flex-col sm:flex-row gap-3">
+          <div class="flex flex-col gap-4">
             <div class="flex-grow relative">
               <div class="relative">
                 <input
+                  id="email"
                   type="email"
                   placeholder="Enter your email address"
                   bind:value={email}
@@ -166,6 +172,13 @@
                   text-base-content placeholder:text-base-content/60 focus:outline-none focus:ring-2 
                   ${errorMessage ? 'focus:ring-error/30' : 'focus:ring-primary/30'}`}
                 />
+                
+                <div class="absolute top-0 left-4 md:left-5 -translate-y-1/2 px-1.5 bg-gradient-to-br from-base-300 to-base-300/90 flex items-center rounded-full">
+                  <label for="email" class="text-xs font-medium text-base-content/90 flex items-center gap-1 p-1">
+                    Email
+                    <span class="text-secondary">*</span>
+                  </label>
+                </div>
                 
                 {#if isValidated && !errorMessage}
                   <div class="absolute right-4 top-1/2 -translate-y-1/2" transition:fade={{ duration: 200 }}>
@@ -194,19 +207,44 @@
               {/if}
             </div>
             
-            <button 
-              type="submit"
-              disabled={isLoading}
-              class="btn btn-primary rounded-full shadow-lg md:shadow-xl shadow-primary/30 transform transition-all duration-300 hover:scale-105 whitespace-nowrap min-w-[120px] md:min-w-[140px] text-sm md:text-base h-10 md:h-12"
-            >
-              {#if isLoading}
-                <span class="loading loading-spinner loading-xs"></span>
-                Processing...
-              {:else}
-                Request Access
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-              {/if}
-            </button>
+            <!-- Optional Feedback Field with improved styling -->
+            <div class="relative">
+              <div class="relative">
+                <textarea
+                  id="feedback"
+                  placeholder="Share your thoughts or feature requests..."
+                  bind:value={feedback}
+                  rows="2"
+                  class="w-full py-2 md:py-3 px-4 md:px-5 rounded-xl bg-base-content/10 backdrop-blur-sm border border-base-content/20 
+                  text-base-content placeholder:text-base-content/60 focus:outline-none focus:ring-2 focus:ring-primary/30
+                  text-sm md:text-base transition-all duration-300 resize-none"
+                ></textarea>
+                
+                <div class="absolute top-0 left-4 md:left-5 -translate-y-1/2 px-1.5 bg-gradient-to-br from-base-300 to-base-300/90 flex items-center rounded-full
+                ">
+                  <label for="feedback" class="text-xs font-medium text-base-content/90 flex items-center gap-1.5 p-1">
+                    Feedback
+                    <span class="px-1.5 py-0.5 bg-accent/20 text-accent text-[10px] rounded-full">Optional</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex justify-center mt-2">
+              <button 
+                type="submit"
+                disabled={isLoading}
+                class="btn btn-primary rounded-full shadow-lg md:shadow-xl shadow-primary/30 transform transition-all duration-300 hover:scale-105 whitespace-nowrap min-w-[120px] md:min-w-[140px] text-sm md:text-base h-10 md:h-12"
+              >
+                {#if isLoading}
+                  <span class="loading loading-spinner loading-xs"></span>
+                  Processing...
+                {:else}
+                  Join Waitlist
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                {/if}
+              </button>
+            </div>
           </div>
           <p class="text-xs text-base-content/60 mt-2 md:mt-3 text-center">
             No spam. We respect your data.
