@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { analytics } from '$lib/firebase';
   import { onMount, tick } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   
