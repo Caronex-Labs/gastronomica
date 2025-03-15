@@ -19,13 +19,20 @@ try {
 export const adminDB = getFirestore();
 
 // Helper function to add email to waitlist
-export async function addToWaitlist(email: string) {
+export async function addToWaitlist(email: string, feedback?: string) {
     try {
         const timestamp = new Date();
-        await adminDB.collection('waitlist').doc(email).set({
+        const data: { email: string; timestamp: Date; feedback?: string } = {
             email,
             timestamp,
-        });
+        };
+        
+        // Only add feedback if it exists and is not empty
+        if (feedback && feedback.trim().length > 0) {
+            data.feedback = feedback.trim();
+        }
+        
+        await adminDB.collection('waitlist').doc(email).set(data);
         return { success: true };
     } catch (error) {
         console.error('Error adding to waitlist:', error);

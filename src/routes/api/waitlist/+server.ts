@@ -3,7 +3,7 @@ import { addToWaitlist } from '$lib/server/admin';
 
 export async function POST({ request }) {
     try {
-        const { email } = await request.json();
+        const { email, feedback } = await request.json();
         
         // Basic email validation
         if (!email || !isValidEmail(email)) {
@@ -11,7 +11,7 @@ export async function POST({ request }) {
         }
         
         // Add to waitlist in Firestore
-        const result = await addToWaitlist(email);
+        const result = await addToWaitlist(email, feedback);
         
         if (result.success) {
             return json({ success: true });
