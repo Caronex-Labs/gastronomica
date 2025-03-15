@@ -1,14 +1,20 @@
 <script lang="ts">
-	import { logEvent } from 'firebase/analytics';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import '../app.css';
 
-	import { analytics } from '$lib/firebase';
+	import { app } from '$lib/firebase';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	
+	// Import analytics functions directly
+	import { getAnalytics, logEvent, setAnalyticsCollectionEnabled, isSupported } from 'firebase/analytics';
+	import type { Analytics } from 'firebase/analytics';
 
 	let { children } = $props();
+	
+	// Initialize analytics only in browser
+	let analytics: Analytics | null = null;
 	
 	// Initialize theme based on saved preference or default to dark mode
 	if (browser) {
@@ -21,17 +27,40 @@
 	// Track the current page path to avoid duplicate events
 	let currentPath = '';
 
-	// Use a single effect to track page views
+	// Initialize analytics in browser only
+	onMount(() => {
+		if (!browser) return;
+		
+		// Initialize analytics in browser
+		isSupported().then(supported => {
+			if (supported) {
+				// Initialize analytics
+				analytics = getAnalytics(app);
+				
+				// Enable analytics collection
+				setAnalyticsCollectionEnabled(analytics, true);
+				
+				console.log('Firebase Analytics initialized in browser');
+				
+			}
+		}).catch(error => {
+			console.error('Failed to initialize analytics:', error);
+		});
+	});
+
+	// Track page navigation after initial load
 	$effect(() => {
-		// Only run in browser and when page changes
-		if (browser && $page && $page.url.pathname !== currentPath && analytics != null) {
+		// Only run in browser, when analytics is initialized, and when page changes
+		if (browser && analytics && $page && $page.url.pathname !== currentPath) {
 			// Update current path to avoid duplicate events
 			currentPath = $page.url.pathname;
 			
+			// Log the page view
 			logEvent(analytics, 'page_view', {
 				page_path: currentPath,
 			});
 			
+			console.log(`Page navigation tracked: ${currentPath}`);
 		}
 	});
 </script>
