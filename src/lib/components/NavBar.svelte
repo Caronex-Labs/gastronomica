@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Logo from './Logo.svelte';
+	import { getAnalytics, logEvent } from 'firebase/analytics';
+	import { app } from '$lib/firebase';
 	
 	let isScrolled = false;
 	let isDarkMode = true; // Default to dark mode
@@ -37,6 +39,20 @@
 	function applyTheme() {
 		// Apply theme to HTML element
 		document.documentElement.setAttribute('data-theme', isDarkMode ? 'palete_dark' : 'palete_light');
+	}
+	
+	// Track CTA button click
+	function trackCTAClick(location: string) {
+		try {
+			const analytics = getAnalytics(app);
+			logEvent(analytics, 'cta_click', {
+				cta_location: location,
+				cta_text: 'Join Waitlist'
+			});
+			console.log(`NavBar CTA click tracked: ${location}`);
+		} catch (error) {
+			console.error('Failed to track CTA click:', error);
+		}
 	}
 </script>
 
@@ -79,7 +95,11 @@
 					{/if}
 				</button>
 				
-				<a href="#cta" class="btn btn-primary rounded-full px-5 text-primary-content font-semibold">
+				<a 
+					href="#cta" 
+					on:click={() => trackCTAClick('navbar_desktop')}
+					class="btn btn-primary rounded-full px-5 text-primary-content font-semibold"
+				>
 					Join Waitlist
 				</a>
 			</nav>
@@ -102,7 +122,11 @@
 				</button>
 				
 				<!-- Join Waitlist Button for Mobile -->
-				<a href="#cta" class="btn btn-primary btn-sm rounded-full px-3 text-primary-content font-semibold">
+				<a 
+					href="#cta" 
+					on:click={() => trackCTAClick('navbar_mobile')}
+					class="btn btn-primary btn-sm rounded-full px-3 text-primary-content font-semibold"
+				>
 					Join Waitlist
 				</a>
 			</div>

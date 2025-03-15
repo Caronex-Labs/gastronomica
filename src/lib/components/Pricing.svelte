@@ -1,6 +1,9 @@
 <script lang="ts">
   import { Check, X, Utensils, Camera, Sparkles, Users, Globe, Star, Clock, ChefHat, MapPin, Heart, Bookmark, AlertTriangle, Flame } from 'lucide-svelte';
   import type { ComponentType } from 'svelte';
+  // Import Firebase Analytics
+  import { getAnalytics, logEvent } from 'firebase/analytics';
+  import { app } from '$lib/firebase';
   
   // Toggle between monthly and yearly pricing
   let isYearly = false;
@@ -140,6 +143,22 @@
       maximumFractionDigits: 0
     }).format(price);
   }
+  
+  // Track CTA button click
+  function trackCTAClick(planName: string) {
+    try {
+      const analytics = getAnalytics(app);
+      logEvent(analytics, 'cta_click', {
+        cta_location: 'pricing_section',
+        cta_text: `Choose ${planName}`,
+        plan_name: planName,
+        billing_cycle: isYearly ? 'yearly' : 'monthly'
+      });
+      console.log(`Pricing CTA click tracked: ${planName}`);
+    } catch (error) {
+      console.error('Failed to track CTA click:', error);
+    }
+  }
 </script>
 
 <section id="pricing" class="py-20 px-6 bg-base-200">
@@ -261,6 +280,7 @@
               <div class="card-actions justify-center mt-auto">
                 <a 
                   href="#cta" 
+                  on:click={() => trackCTAClick(plan.name)}
                   class="btn w-full border-none hover:opacity-90"
                   style="background-color: {getColor(plan, 'buttonBg')}; color: {getColor(plan, 'buttonText')};"
                 >

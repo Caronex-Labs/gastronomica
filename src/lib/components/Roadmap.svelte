@@ -3,6 +3,9 @@
   import { MapPin, Star, Zap, Calendar, Users, Award, Sparkles, CheckCircle, MoreHorizontal, Utensils, Camera, Globe } from 'lucide-svelte';
   import RoadmapTimeline from './roadmap/RoadmapTimeline.svelte';
   import RoadmapMobile from './roadmap/RoadmapMobile.svelte';
+  // Import Firebase Analytics
+  import { getAnalytics, logEvent } from 'firebase/analytics';
+  import { app } from '$lib/firebase';
   
   type RoadmapItem = {
     version: string;
@@ -84,6 +87,20 @@
       observer.disconnect();
     };
   });
+
+  // Track CTA button click
+  function trackCTAClick() {
+    try {
+      const analytics = getAnalytics(app);
+      logEvent(analytics, 'cta_click', {
+        cta_location: 'roadmap_section',
+        cta_text: 'Join the Waitlist'
+      });
+      console.log('Roadmap CTA click tracked');
+    } catch (error) {
+      console.error('Failed to track CTA click:', error);
+    }
+  }
 </script>
 
 <section id="roadmap" class="py-16 md:py-20 px-4 md:px-6">
@@ -108,7 +125,11 @@
       <div class="inline-block">
         <div class="relative">
           <div class="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent opacity-70 blur-xl rounded-full"></div>
-          <a href="#cta" class="relative z-10 btn btn-primary btn-md md:btn-lg">
+          <a 
+            href="#cta" 
+            on:click={trackCTAClick}
+            class="relative z-10 btn btn-primary btn-md md:btn-lg"
+          >
             Join the Waitlist
           </a>
         </div>

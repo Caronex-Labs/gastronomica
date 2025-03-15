@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
   import { fade, fly } from 'svelte/transition';
+  // Import Firebase Analytics
+  import { getAnalytics, logEvent } from 'firebase/analytics';
+  import { app } from '$lib/firebase';
   
   let email = '';
   let feedback = '';
@@ -93,6 +96,18 @@
       const result = await response.json();
       
       if (result.success) {
+        // Track successful form submission with Firebase Analytics
+        try {
+          const analytics = getAnalytics(app);
+          logEvent(analytics, 'waitlist_signup', {
+            has_feedback: feedback.trim().length > 0,
+            email_domain: email.trim().split('@')[1]
+          });
+          console.log('Waitlist signup event tracked');
+        } catch (analyticsError) {
+          console.error('Failed to track waitlist signup:', analyticsError);
+        }
+        
         isSubmitted = true;
         email = '';
         feedback = '';

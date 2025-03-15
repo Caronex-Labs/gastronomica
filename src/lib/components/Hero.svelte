@@ -1,5 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  // Import Firebase Analytics
+  import { getAnalytics, logEvent } from 'firebase/analytics';
+  import { app } from '$lib/firebase';
   
   let isVisible = false;
   
@@ -10,6 +13,20 @@
     
     return () => clearTimeout(timer);
   });
+  
+  // Track CTA button click
+  function trackCTAClick() {
+    try {
+      const analytics = getAnalytics(app);
+      logEvent(analytics, 'cta_click', {
+        cta_location: 'hero_section',
+        cta_text: 'Request Early Access'
+      });
+      console.log('Hero CTA click tracked');
+    } catch (error) {
+      console.error('Failed to track CTA click:', error);
+    }
+  }
 </script>
 
 <section id="hero" class="relative pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-20 lg:pb-32 px-4 md:px-6 overflow-hidden">
@@ -57,6 +74,7 @@
       >
         <a 
           href="#cta"
+          on:click={trackCTAClick}
           class="btn btn-primary btn-md md:btn-lg rounded-full shadow-lg md:shadow-xl shadow-primary/30 transform transition-all duration-300 hover:scale-105 px-6 md:px-8"
         >
           Request Early Access
