@@ -41,6 +41,16 @@
 				setAnalyticsCollectionEnabled(analytics, true);
 				
 				console.log('Firebase Analytics initialized in browser');
+
+
+				currentPath = $page.url.pathname;
+			
+				// Log the page view
+				logEvent(analytics, 'page_view', {
+					page_path: currentPath,
+				});
+				
+				console.log(`Page navigation tracked: ${currentPath}`);
 				
 			}
 		}).catch(error => {
@@ -48,21 +58,6 @@
 		});
 	});
 
-	// Track page navigation after initial load
-	$effect(() => {
-		// Only run in browser, when analytics is initialized, and when page changes
-		if (browser && analytics && $page && $page.url.pathname !== currentPath) {
-			// Update current path to avoid duplicate events
-			currentPath = $page.url.pathname;
-			
-			// Log the page view
-			logEvent(analytics, 'page_view', {
-				page_path: currentPath,
-			});
-			
-			console.log(`Page navigation tracked: ${currentPath}`);
-		}
-	});
 </script>
 
 <div class="flex min-h-screen flex-col">
