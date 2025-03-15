@@ -5,6 +5,9 @@
   import AiAssistantMockup from './mockups/AiAssistantMockup.svelte';
   import DishCaptureMockup from './mockups/DishCaptureMockup.svelte';
   import SocialSharingMockup from './mockups/SocialSharingMockup.svelte';
+  // Import Firebase Analytics
+  import { getAnalytics, logEvent } from 'firebase/analytics';
+  import { app } from '$lib/firebase';
   
   // Feature card data
   const features = [
@@ -41,6 +44,8 @@
   let isVisible = false;
   let cardsVisible = features.map(() => false);
   let isDarkMode = true;
+  let hasTrackedView = false; // Track if we've already logged the view event
+  let featuresElement: HTMLElement;
   
   // Reactive declarations - these will update whenever isDarkMode changes
   $: accentColor = isDarkMode 
@@ -76,13 +81,48 @@
     
     observer.observe(document.documentElement, { attributes: true });
     
+    // Setup intersection observer for tracking views
+    const viewObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasTrackedView) {
+          try {
+            const analytics = getAnalytics(app);
+            logEvent(analytics, 'section_view', {
+              section_id: 'features',
+              section_name: 'Features'
+            });
+            console.log('Features section view tracked');
+            hasTrackedView = true; // Mark as tracked
+          } catch (error) {
+            console.error('Failed to track section view:', error);
+          }
+          
+          // Once tracked, no need to keep observing
+          viewObserver.unobserve(featuresElement);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (featuresElement) {
+      viewObserver.observe(featuresElement);
+    }
+    
     return () => {
       observer.disconnect();
+      if (featuresElement) {
+        viewObserver.unobserve(featuresElement);
+      }
+      viewObserver.disconnect();
     };
   });
 </script>
 
-<section id="features" class="py-16 md:py-20 px-4 md:px-6 bg-primary/5">
+<section 
+  id="features" 
+  class="py-16 md:py-20 px-4 md:px-6 bg-primary/5"
+  bind:this={featuresElement}
+>
   <div class="max-w-7xl mx-auto">
     <!-- Section Header -->
     <div class="text-center mb-10 md:mb-16">

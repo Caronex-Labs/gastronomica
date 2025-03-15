@@ -5,13 +5,49 @@
   import { app } from '$lib/firebase';
   
   let isVisible = false;
+  let hasTrackedView = false; // Track if we've already logged the view event
+  let heroElement: HTMLElement;
   
   onMount(() => {
+    // Animation timer
     const timer = setTimeout(() => {
       isVisible = true;
     }, 100);
     
-    return () => clearTimeout(timer);
+    // Setup intersection observer for tracking views
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasTrackedView) {
+          try {
+            const analytics = getAnalytics(app);
+            logEvent(analytics, 'section_view', {
+              section_id: 'hero',
+              section_name: 'Hero'
+            });
+            console.log('Hero section view tracked');
+            hasTrackedView = true; // Mark as tracked
+          } catch (error) {
+            console.error('Failed to track section view:', error);
+          }
+          
+          // Once tracked, no need to keep observing
+          observer.unobserve(heroElement);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (heroElement) {
+      observer.observe(heroElement);
+    }
+    
+    return () => {
+      clearTimeout(timer);
+      if (heroElement) {
+        observer.unobserve(heroElement);
+      }
+      observer.disconnect();
+    };
   });
   
   // Track CTA button click
@@ -29,7 +65,7 @@
   }
 </script>
 
-<section id="hero" class="relative pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-20 lg:pb-32 px-4 md:px-6 overflow-hidden">
+<section id="hero" class="relative pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-20 lg:pb-32 px-4 md:px-6 overflow-hidden" bind:this={heroElement}>
   <!-- Enhanced Background Design Elements -->
   <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[20rem] md:w-[30rem] lg:w-[40rem] h-[20rem] md:h-[30rem] lg:h-[40rem] rounded-full bg-primary/30 blur-[100px] opacity-70"></div>
   <div class="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[20rem] md:w-[30rem] lg:w-[40rem] h-[20rem] md:h-[30rem] lg:h-[40rem] rounded-full bg-accent/30 blur-[100px] opacity-70"></div>

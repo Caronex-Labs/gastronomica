@@ -4,9 +4,12 @@
   // Import Firebase Analytics
   import { getAnalytics, logEvent } from 'firebase/analytics';
   import { app } from '$lib/firebase';
+  import { onMount } from 'svelte';
   
   // Toggle between monthly and yearly pricing
   let isYearly = false;
+  let hasTrackedView = false; // Track if we've already logged the view event
+  let pricingElement: HTMLElement;
   
   // Define color types
   type ColorTheme = 'primary' | 'secondary' | 'accent';
@@ -159,9 +162,49 @@
       console.error('Failed to track CTA click:', error);
     }
   }
+  
+  // Setup intersection observer for tracking views
+  onMount(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasTrackedView) {
+          try {
+            const analytics = getAnalytics(app);
+            logEvent(analytics, 'section_view', {
+              section_id: 'pricing',
+              section_name: 'Pricing'
+            });
+            console.log('Pricing section view tracked');
+            hasTrackedView = true; // Mark as tracked
+          } catch (error) {
+            console.error('Failed to track section view:', error);
+          }
+          
+          // Once tracked, no need to keep observing
+          observer.unobserve(pricingElement);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (pricingElement) {
+      observer.observe(pricingElement);
+    }
+    
+    return () => {
+      if (pricingElement) {
+        observer.unobserve(pricingElement);
+      }
+      observer.disconnect();
+    };
+  });
 </script>
 
-<section id="pricing" class="py-20 px-6 bg-base-200">
+<section 
+  id="pricing" 
+  class="py-20 px-6 bg-base-200"
+  bind:this={pricingElement}
+>
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-8">
       <h2 class="text-4xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>

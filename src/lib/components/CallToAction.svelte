@@ -14,6 +14,7 @@
   let isValidated = false;
   let sectionElement: HTMLElement;
   let inputElement: HTMLInputElement;
+  let hasTrackedView = false; // Track if we've already logged the view event
   
   onMount(() => {
     const observer = new IntersectionObserver(
@@ -21,6 +22,22 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             isVisible = true;
+            
+            // Track section view event - only once per session
+            if (!hasTrackedView) {
+              try {
+                const analytics = getAnalytics(app);
+                logEvent(analytics, 'section_view', {
+                  section_id: 'cta',
+                  section_name: 'Call To Action'
+                });
+                console.log('CTA section view tracked');
+                hasTrackedView = true; // Mark as tracked
+              } catch (error) {
+                console.error('Failed to track section view:', error);
+              }
+            }
+            
             // Once visible, no need to keep observing
             observer.unobserve(sectionElement);
           }

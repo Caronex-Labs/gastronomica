@@ -64,12 +64,28 @@
   
   // Animation control for fade-in effect
   let isVisible = false;
+  let hasTrackedView = false; // Track if we've already logged the view event
   
   onMount(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           isVisible = true;
+          
+          // Track section view event - only once per session
+          if (!hasTrackedView) {
+            try {
+              const analytics = getAnalytics(app);
+              logEvent(analytics, 'section_view', {
+                section_id: 'roadmap',
+                section_name: 'Roadmap'
+              });
+              console.log('Roadmap section view tracked');
+              hasTrackedView = true; // Mark as tracked
+            } catch (error) {
+              console.error('Failed to track section view:', error);
+            }
+          }
         }
       },
       { threshold: 0.1 }
