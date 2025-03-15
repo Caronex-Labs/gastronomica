@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import type { Analytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,4 +19,46 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(app);
+
+// Export the app instance
+export { app };
+
+// Initialize Analytics only in browser environments
+export let analytics: Analytics | null = null;
+
+// Track if analytics is being initialized to avoid duplicate initialization
+let isInitializing = false;
+
+// Function to initialize analytics
+async function initializeAnalytics(): Promise<Analytics | null> {
+  // Only initialize in browser and if not already initializing
+  if (typeof window === 'undefined' || isInitializing || analytics) {
+    return analytics;
+  }
+  
+  isInitializing = true;
+  
+  try {
+    const { getAnalytics, isSupported, setAnalyticsCollectionEnabled } = await import('firebase/analytics');
+    const supported = await isSupported();
+    
+    if (supported) {
+      analytics = getAnalytics(app);
+      setAnalyticsCollectionEnabled(analytics, true);
+      console.log('Firebase Analytics initialized in browser');
+      return analytics;
+    }
+  } catch (error) {
+    console.error('Failed to initialize analytics:', error);
+  } finally {
+    isInitializing = false;
+  }
+  
+  return null;
+}
+
+// Initialize analytics in browser only
+if (typeof window !== 'undefined') {
+  // We're in the browser, so it's safe to initialize analytics
+  initializeAnalytics();
+}
