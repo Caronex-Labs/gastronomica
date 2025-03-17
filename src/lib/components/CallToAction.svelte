@@ -121,6 +121,12 @@
             email_domain: email.trim().split('@')[1]
           });
           console.log('Waitlist signup event tracked');
+          
+          // Track Google Ads conversion
+          if (typeof window !== 'undefined' && typeof (window as any).gtag_report_conversion === 'function') {
+            (window as any).gtag_report_conversion();
+            console.log('Google Ads conversion tracked');
+          }
         } catch (analyticsError) {
           console.error('Failed to track waitlist signup:', analyticsError);
         }

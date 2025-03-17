@@ -48,6 +48,24 @@
 	  gtag('config', 'AW-16934647787');
 	</script>
 
+	<!-- Event snippet for Sign-up conversion page -->
+	<script>
+	function gtag_report_conversion(url) {
+	  var callback = function () {
+	    if (typeof(url) != 'undefined') {
+	      window.location = url;
+	    }
+	  };
+	  gtag('event', 'conversion', {
+	      'send_to': 'AW-16934647787/7T4GCJ6O56saEOvviIs_',
+	      'value': 1.0,
+	      'currency': 'INR',
+	      'event_callback': callback
+	  });
+	  return false;
+	}
+	</script>
+
 	%sveltekit.head%
 </head>
 
